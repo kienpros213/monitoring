@@ -23,6 +23,7 @@ scrape_configs:
         - http://prometheus.io    # Target to probe with http.
         - https://prometheus.io   # Target to probe with https.
         - https://www.google.com.vn/?hl=vi
+        - https://apec.com.vn
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
