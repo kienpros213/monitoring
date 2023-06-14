@@ -54,3 +54,12 @@ services:
       - /dev/disk/:/dev/disk:ro
     devices:
       - /dev/kmsg
+  blackbox:
+    image: prom/blackbox-exporter
+    container_name: blackbox
+    ports:
+      - "9115:9115"
+    volumes:
+      - ./blackbox.yml:/etc/blackbox/blackbox.yml
+    command:
+      - "--config.file=/etc/blackbox/blackbox.yml"
