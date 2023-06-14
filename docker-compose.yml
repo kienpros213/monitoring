@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
-      
+
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
