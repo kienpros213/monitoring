@@ -8,7 +8,7 @@ scrape_configs:
 #--------------------------------------
   - job_name: 'node_exporter'
     static_configs:
-      - targets: ['node_exporter:9100','host.docker.internal:9100','10.0.120.88:9100']
+      - targets: ['node_exporter:9100','host.docker.internal:9100','192.168.1.217:9100']
 #--------------------------------------
   - job_name: 'cadvisor'
     static_configs:
@@ -30,4 +30,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 10.0.120.88:9115  # The blackbox exporter's real hostname:port.
+        replacement: 192.168.1.217:9115  # The blackbox exporter's real hostname:port.
