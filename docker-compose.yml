@@ -25,6 +25,8 @@ services:
     container_name: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
@@ -63,3 +65,10 @@ services:
       - ./blackbox.yml:/etc/blackbox/blackbox.yml
     command:
       - "--config.file=/etc/blackbox/blackbox.yml"
+
+  telegram-bot:
+    image: telegrammessenger/proxy:latest
+    environment:
+      - TELEGRAM_SECRET=5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw
+    ports:
+      - 8443:8443

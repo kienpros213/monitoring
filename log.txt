@@ -1,2 +1,0 @@
-- label sẽ là công cụ để policies nào trỏ đến contact point nào
-- set label cùng với rule để áp dụng rule đấy với contact point đó
