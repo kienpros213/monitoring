@@ -1,14 +1,10 @@
 route:
-  receiver: 'mail'
-  repeat_interval: 4h
-  group_by: [ alertname ]
-
+  group_by: ['mingAlert']
+  group_wait: 10s
+  receiver: 'mingPush'
 
 receivers:
-  - name: 'mail'
-    email_configs:
-      - smarthost: 'smtp.gmail.com:465'
-        auth_username: 'your_mail@gmail.com'
-        auth_password: ""
-        from: 'your_mail@gmail.com'
-        to: 'some_mail@gmail.com'
+- name: 'mingPush'
+  webhook_configs:
+  - url: 'https://telepush.dev/api/inlets/alertmanager/6fd928'
+    http_config:
