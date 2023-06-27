@@ -6,6 +6,7 @@ volumes:
     driver: local
   grafana-data:
     driver: local
+  alertmanager-data:
 
 services:
   prometheus:
@@ -15,6 +16,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert.yml:/etc/prometheus/alert.yml
       - prometheus-data:/prometheus
     restart: unless-stopped
     command:
@@ -72,3 +74,13 @@ services:
       - TELEGRAM_SECRET=5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw
     ports:
       - 8443:8443
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - "./config:/config"
+      - alertmanager-data:/data
+    command: --config.file=/config/alertmanager.yml --log.level=debug
