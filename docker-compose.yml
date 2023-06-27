@@ -68,13 +68,6 @@ services:
     command:
       - "--config.file=/etc/blackbox/blackbox.yml"
 
-  telegram-bot:
-    image: telegrammessenger/proxy:latest
-    environment:
-      - TELEGRAM_SECRET=5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw
-    ports:
-      - 8443:8443
-
   alertmanager:
     image: prom/alertmanager:latest
     restart: unless-stopped
