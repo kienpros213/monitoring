@@ -8,7 +8,7 @@ scrape_configs:
 #--------------------------------------
   - job_name: 'node_exporter'
     static_configs:
-      - targets: ['node_exporter:9100','host.docker.internal:9100','10.0.206.96:9100']
+      - targets: ['node_exporter:91003','host.docker.internal:91003','10.0.206.195:9100']
 #--------------------------------------
   - job_name: 'cadvisor'
     static_configs:
@@ -30,12 +30,12 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 10.0.206.96:9115  # The blackbox exporter's real hostname:port.
+        replacement: 10.0.206.195:9115  # The blackbox exporter's real hostname:port.
 #----------------------------------------
 alerting:
   alertmanagers:
     - scheme: http
       static_configs:
-        - targets: [ '10.0.206.96:9093' ]
+        - targets: [ '10.0.206.195:9093' ]
 rule_files:
       - "alert.yml"

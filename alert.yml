@@ -10,5 +10,5 @@ groups:
         labels:
           severity: page
         annotations:
-          summary: "Instance {{ $labels.instance }} down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+          summary: "The {{ $labels.instance }} is on fire!!!"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} kinda sus"

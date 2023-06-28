@@ -1,10 +1,16 @@
-route:
-  group_by: ['mingAlert']
-  group_wait: 10s
-  receiver: 'mingPush'
+global:
 
+# catch-all route to receive and handle all incoming alerts
+route:
+  group_by: ['alertname']
+  group_wait: 10s       # wait up to 10s for more alerts to group them
+  receiver: 'telepush'  # see below
+
+# telepush configuration here
 receivers:
-- name: 'mingPush'
-  webhook_configs:
-  - url: 'https://telepush.dev/api/inlets/alertmanager/6fd928'
-    http_config:
+  - name: 'telepush'
+    telegram_configs:
+    - bot_token: 6046664628:AAGZmu-8kUYdGxRQz_ewX1mzUKKbmC41Q6Y
+      api_url: https://api.telegram.org
+      chat_id: -869553842
+      parse_mode: ''
