@@ -9,6 +9,21 @@ volumes:
   alertmanager-data:
 
 services:
+  webhook:
+    container_name: webhookServer
+    image: node:18
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./server:/home/node/app
+    ports:
+      - "5555:5555"
+    expose:
+      - "5555"
+    command: "npm start"
+
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -60,7 +75,7 @@ services:
       - /dev/kmsg
   blackbox:
     image: prom/blackbox-exporter
-    container_name: blackbox
+    container_name: blackBox
     ports:
       - "9115:9115"
     volumes:
@@ -69,6 +84,7 @@ services:
       - "--config.file=/etc/blackbox/blackbox.yml"
 
   alertmanager:
+    container_name: alertManager
     image: prom/alertmanager:latest
     restart: unless-stopped
     ports:
