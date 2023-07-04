@@ -6,4 +6,4 @@ route:
 receivers:
 - name: 'mingPush'
   webhook_configs:
-  - url: 'http://localhost:5555/webhook'
+  - url: 'https://telepush.dev/api/inlets/alertmanager/6fd928'
