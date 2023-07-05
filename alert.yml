@@ -3,10 +3,10 @@ groups:
     rules:
       - alert: InstanceDown 
         expr: up{job="services"} < 1 
-        for: 20s
+        for: 3s
       - alert: CPU On Fire
         expr: node_memory_MemFree_bytes > 10
-        for: 10s
+        for: 3s
         labels:
           severity: page
         annotations:

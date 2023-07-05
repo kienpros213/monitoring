@@ -18,6 +18,10 @@ services:
       - NODE_ENV=production
     volumes:
       - ./server:/home/node/app
+    dns:
+      - "8.8.8.8"
+      - "8.8.4.4"
+      - "172.0.0.1"
     ports:
       - "5555:5555"
     expose:
