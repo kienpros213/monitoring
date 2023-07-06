@@ -1,14 +1,19 @@
 groups:
   - name: DemoAlerts
     rules:
-      - alert: InstanceDown 
-        expr: up{job="services"} < 1 
-        for: 3s
-      - alert: CPU On Fire
-        expr: node_memory_MemFree_bytes > 10
-        for: 3s
+      - alert: InstanceDown
+        expr: up{job="services"} < 1
+        for: 10s
+
+      - alert: CPU Load
+        expr: avg without (mode,cpu) (1 - rate(node_cpu_seconds_total{mode="idle"}[1m])) > 0
+        for: 10s
         labels:
           severity: page
         annotations:
-          summary: "Instance {{ $labels.instance }} down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+          summary: "high CPU load"
+          description: "{{ $labels.instance }} CPU load is {{humanize $value}}"
+
+      - alert: Used Memory
+        expr: sum(node_memory_MemTotal_bytes) by (instance) / 1024^3 - sum(node_memory_MemFree_bytes) by (instance) / 1024^3 < 3
+        for: 30s

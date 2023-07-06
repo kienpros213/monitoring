@@ -11,19 +11,19 @@ app.get("/:universalURL", (req, res) => {
 app.post('/webhook', (req, res) => {
   const payload = req.body;
   // Extract relevant information from the payload
-  console.log(payload.alerts[0].labels)
-  const receiver = payload.receiver
-  const status = payload.status
-  const label = payload.alerts[0].labels.alertname
-  const instance = payload.alerts[0].labels.instance
+  console.log(payload)
+  const alertName = payload.commonLabels.alertname
+  const instance = payload.commonLabels.instance
+  const description = payload.commonAnnotations.description
+  const summary = payload.commonAnnotations.summary
 
-  // Prepare the message to be sent to Telegram
-  let message = `the CPU is on fire!!!!\n${receiver}\n${status}\n${label}\n${instance}`
+  //message to be sent to Telegram
+  let message = payload.alert[0].labels
 
-  // Replace 'YOUR_TELEGRAM_BOT_TOKEN with your actual Telegram bot token
-  const botToken = '6046664628:AAGZmu-8kUYdGxRQz_ewX1mzUKKbmC41Q6Y';
-  // Replace 'YOUR_CHAT_ID' with your actual chat ID where you want to send the message
-  const chatId = '-869553842';
+  //Telegram bot token
+  const botToken = '5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw';
+  //Telegram chat ID
+  const chatId = '5404725958';
 
   // Send the message to Telegram using the Telegram Bot API
   const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
