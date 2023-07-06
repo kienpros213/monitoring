@@ -18,12 +18,16 @@ app.post('/webhook', (req, res) => {
   const summary = payload.commonAnnotations.summary
 
   //message to be sent to Telegram
-  let message = payload.alert[0].labels
+  let message = `*firing*
+- 🚨Alert: ${alertName}
+- 📰Summary: ${summary}🔥🔥🔥
+- 📝Description: ${description}
+`
 
   //Telegram bot token
-  const botToken = '5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw';
+  const botToken = '6046664628:AAGZmu-8kUYdGxRQz_ewX1mzUKKbmC41Q6Y';
   //Telegram chat ID
-  const chatId = '5404725958';
+  const chatId = '-869553842';
 
   // Send the message to Telegram using the Telegram Bot API
   const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;

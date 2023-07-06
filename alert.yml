@@ -12,8 +12,13 @@ groups:
           severity: page
         annotations:
           summary: "high CPU load"
-          description: "{{ $labels.instance }} CPU load is {{humanize $value}}"
+          description: "{{ $labels.instance }} CPU load is {{ $value | humanizePercentage }}"
 
       - alert: Used Memory
         expr: sum(node_memory_MemTotal_bytes) by (instance) / 1024^3 - sum(node_memory_MemFree_bytes) by (instance) / 1024^3 < 3
         for: 30s
+        labels:
+          severity: page
+        annotations:
+          summary: "high RAM usage"
+          description: "{{ $labels.instance }} RAM usage is {{ $value | humanizePercentage }}"

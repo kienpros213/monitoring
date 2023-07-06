@@ -1,7 +1,9 @@
+
 ---
 version: '3'
 
 volumes:
+  mysql_data:
   prometheus-data:
     driver: local
   grafana-data:
@@ -93,3 +95,23 @@ services:
       - "./config:/config"
       - alertmanager-data:/data
     command: --config.file=/config/alertmanager.yml --log.level=debug
+
+  adminer:
+    image: adminer
+    ports:
+      - "3333:3333"
+
+  MySQL:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: testDatabase
+      MYSQL_USER: kien
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
