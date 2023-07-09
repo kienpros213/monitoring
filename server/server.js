@@ -25,9 +25,9 @@ app.post('/webhook', (req, res) => {
 `
 
   //Telegram bot token
-  const botToken = '6046664628:AAGZmu-8kUYdGxRQz_ewX1mzUKKbmC41Q6Y';
+  const botToken = '5665722957:AAGdw3k6q-1HgtYXu3oRLckTT6LyWJzA0Vw';
   //Telegram chat ID
-  const chatId = '-869553842';
+  const chatId = '5404725958';
 
   // Send the message to Telegram using the Telegram Bot API
   const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
