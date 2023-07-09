@@ -1,9 +1,6 @@
-
----
 version: '3'
 
 volumes:
-  mysql_data:
   prometheus-data:
     driver: local
   grafana-data:
@@ -49,7 +46,7 @@ services:
 
   node_exporter:
     image: quay.io/prometheus/node-exporter:latest
-    container_name: node_exporter
+    container_name: nodeExporter
     command:
       - '--path.rootfs=/host'
     pid: host
@@ -76,8 +73,8 @@ services:
     devices:
       - /dev/kmsg
   blackbox:
-    image: prom/blackbox-exporter
     container_name: blackBox
+    image: prom/blackbox-exporter
     ports:
       - "9115:9115"
     volumes:
@@ -97,13 +94,23 @@ services:
     command: --config.file=/config/alertmanager.yml --log.level=debug
 
   adminer:
-    image: adminer
+    container_name: adminer
+    image: adminer:latest
     restart: always
     ports:
       - 3030:8080
 
-  db:
-    image: mysql:5.6
+  mysql:
+    container_name: mysql
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: example
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: example
