@@ -20,7 +20,7 @@ app.post('/webhook', (req, res) => {
   //message to be sent to Telegram
   let message = `*firing*
 - 🚨Alert: ${alertName}
-- 📰Summary: ${summary}🔥🔥🔥
+- 📰Summary: ${summary}🔥
 - 📝Description: ${description}
 `
 
@@ -35,7 +35,7 @@ app.post('/webhook', (req, res) => {
     chat_id: chatId,
     text: message,
   };
-  
+
   axios.post(telegramUrl, params)
     .then(() => {
       res.sendStatus(200);

@@ -101,16 +101,21 @@ services:
       - 3030:8080
 
   mysql:
-    container_name: mysql
     image: mysql:latest
-    restart: always
+    ports:
+      - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      - MYSQL_ROOT_PASSWORD=1529164
+      - MYSQL_DATABASE=kien
+      - MYSQL_USER=kien
+      - MYSQL_PASSWORD=1529164
 
   postgres:
     container_name: postgres
     image: postgres:latest
     restart: always
+    ports:
+     - "5432:5432"
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: example
+     - POSTGRES_USER=kien
+     - POSTGRES_PASSWORD=1529164
