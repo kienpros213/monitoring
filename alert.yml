@@ -4,7 +4,7 @@ groups:
       - alert: InstanceDown
         expr: up{job="services"} < 1
         for: 10s
-
+#--------------------------------------
       - alert: CPU Load
         expr: avg without (mode,cpu) (1 - rate(node_cpu_seconds_total{mode="idle"}[1m])) > 0
         for: 10s
@@ -13,7 +13,7 @@ groups:
         annotations:
           summary: "high CPU load"
           description: "{{ $labels.instance }} CPU load is {{ $value | humanizePercentage }}"
-
+#-------------------------------------
       - alert: Used Memory
         expr: sum(node_memory_MemTotal_bytes) by (instance) / 1024^3 - sum(node_memory_MemFree_bytes) by (instance) / 1024^3 < 3
         for: 30s
@@ -22,3 +22,21 @@ groups:
         annotations:
           summary: "high RAM usage"
           description: "{{ $labels.instance }} RAM usage is {{ $value | humanizePercentage }}"
+#------------------------------------
+      - alert: MySQL Down
+        expr: probe_success{job="mysql"} < 1
+        for: 30s
+        labels:
+          severity: page
+        annotations:
+          summary: "MySQL is down"
+          description: "MySQL at {{ $labels.instance }}"
+#------------------------------------
+      - alert: Postgres Down
+        expr: probe_success{job="postgres"} < 1
+        for: 30s
+        labels:
+          severity: page
+        annotations:
+          summary: "Postgres is down"
+          description: "Postgres at {{ $labels.instance }}"
