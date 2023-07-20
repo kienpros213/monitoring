@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: webhook
+  name: webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: webhook
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/monitoring-default: "true"
+        io.kompose.service: webhook
+    spec:
+      containers:
+        - args:
+            - npm
+            - start
+          env:
+            - name: NODE_ENV
+              value: production
+          image: node:18
+          name: webhookserver
+          ports:
+            - containerPort: 5555
+          resources: {}
+          volumeMounts:
+            - mountPath: /home/node/app
+              name: webhook-hostpath0
+          workingDir: /home/node/app
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: D:\projects\Docker\monitoring\server
+          name: webhook-hostpath0
+status: {}

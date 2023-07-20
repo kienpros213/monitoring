@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: prometheus
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/monitoring-default: "true"
+        io.kompose.service: prometheus
+    spec:
+      containers:
+        - args:
+            - --config.file=/etc/prometheus/prometheus.yml
+          image: prom/prometheus:latest
+          name: prometheus
+          ports:
+            - containerPort: 9090
+          resources: {}
+          volumeMounts:
+            - mountPath: /etc/prometheus/prometheus.yml
+              name: prometheus-hostpath0
+            - mountPath: /etc/prometheus/alert.yml
+              name: prometheus-hostpath1
+            - mountPath: /prometheus
+              name: prometheus-data
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: D:\projects\Docker\monitoring\prometheus.yml
+          name: prometheus-hostpath0
+        - hostPath:
+            path: D:\projects\Docker\monitoring\alert.yml
+          name: prometheus-hostpath1
+        - hostPath:
+            path: D:\projects\Docker\monitoring
+          name: prometheus-data
+status: {}

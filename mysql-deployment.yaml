@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert --volumes hostPath
+    kompose.version: 1.28.0 (c4137012e)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysql
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert --volumes hostPath
+        kompose.version: 1.28.0 (c4137012e)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/monitoring-default: "true"
+        io.kompose.service: mysql
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: kien
+            - name: MYSQL_PASSWORD
+              value: "1529164"
+            - name: MYSQL_ROOT_PASSWORD
+              value: "1529164"
+            - name: MYSQL_USER
+              value: kien
+          image: mysql:latest
+          name: mysql
+          ports:
+            - containerPort: 3306
+          resources: {}
+      restartPolicy: Always
+status: {}
