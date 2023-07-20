@@ -8,4 +8,4 @@ route:
 receivers:
 - name: 'mingPush'
   webhook_configs:
-  - url: 'http://172.24.240.241:5555/webhook'
+  - url: 'http://127.0.0.1:5555/webhook'

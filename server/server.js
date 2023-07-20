@@ -46,6 +46,6 @@ app.post('/webhook', (req, res) => {
     });
 });
 
-app.listen(5555, () => {
+app.listen(5555,'0.0.0.0', () => {
   console.log('Webhook receiver started on port 5555');
 });

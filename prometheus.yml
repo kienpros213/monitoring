@@ -22,6 +22,10 @@ scrape_configs:
       - targets:
         - https://apec.com.vn
         - http://localhost:5555
+        - http://host.docker.internal:5555
+        - http://10.0.120.111:5555
+        - http://172.24.240.241:5555
+        - http://127.0.0.1:5555
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -37,7 +41,6 @@ scrape_configs:
     static_configs:
       - targets:
         - 10.0.120.111:3306
-        - host.docker.internal:3306
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -53,7 +56,6 @@ scrape_configs:
     static_configs:
       - targets:
         - 10.0.120.111:5432
-        - host.docker.internal:5432
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
