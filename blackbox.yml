@@ -1,3 +1,7 @@
+apiVersion: v1
+metadata:
+  generateName: blackbox
+kind: ConfigMap
 modules:
   http_2xx:
     http:
@@ -9,7 +13,11 @@ modules:
       tls_config:
         insecure_skip_verify: true
       valid_http_versions:
+        - HTTP/0.9
         - HTTP/1.1
         - HTTP/2.0
     prober: http
     timeout: 15s
+
+  tcp_connect:
+    prober: tcp

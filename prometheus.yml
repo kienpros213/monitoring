@@ -1,14 +1,18 @@
+apiVersion: v1
+metadata:
+  generateName: prometheus
+kind: ConfigMap
 global:
-  scrape_interval: 1s
+  scrape_interval: 10s
 scrape_configs:
   - job_name: 'prometheus'
-    scrape_interval: 1s
+    scrape_interval: 10s
     static_configs:
       - targets: ['localhost:9090']
 #--------------------------------------
   - job_name: 'node_exporter'
     static_configs:
-      - targets: ['node_exporter:9100','host.docker.internal:9100','10.0.206.96:9100']
+      - targets: ['10.0.120.111:9100']
 #--------------------------------------
   - job_name: 'cadvisor'
     static_configs:
@@ -17,25 +21,56 @@ scrape_configs:
   - job_name: 'blackbox'
     metrics_path: /probe
     params:
-      module: [http_2xx]  # Look for a HTTP 200 response.
+      module: [http_2xx]
     static_configs:
       - targets:
-        - http://prometheus.io    # Target to probe with http.
-        - https://prometheus.io   # Target to probe with https.
-        - https://www.google.com.vn/?hl=vi
         - https://apec.com.vn
+        - http://localhost:5555
+        - http://host.docker.internal:5555
+        - http://10.0.120.111:5555
+        - http://172.24.240.241:5555
+        - http://127.0.0.1:5555
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 10.0.206.96:9115  # The blackbox exporter's real hostname:port.
+        replacement: 10.0.120.111:9115  # The blackbox exporter's real hostname:port.
 #----------------------------------------
+  - job_name: 'mysql'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+      - targets:
+        - 10.0.120.111:3306
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.120.111:9115
+#---------------------------------------
+  - job_name: 'postgres'
+    metrics_path: /probe
+    params:
+      module: [tcp_connect]
+    static_configs:
+      - targets:
+        - 10.0.120.111:5432
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 10.0.120.111:9115
 alerting:
   alertmanagers:
     - scheme: http
       static_configs:
-        - targets: [ '10.0.206.96:9093' ]
+        - targets: [ '10.0.120.111:9093' ]
 rule_files:
       - "alert.yml"
