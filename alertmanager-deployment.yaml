@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert --volumes hostPath
+    kompose.cmd: kompose convert --volumes=hostPath
     kompose.version: 1.28.0 (c4137012e)
   creationTimestamp: null
   labels:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert --volumes hostPath
+        kompose.cmd: kompose convert --volumes=hostPath
         kompose.version: 1.28.0 (c4137012e)
       creationTimestamp: null
       labels:
@@ -35,11 +35,11 @@ spec:
             - containerPort: 9093
           resources: {}
           volumeMounts:
-            - mountPath: /config
-              name: alertmanager-hostpath0
+            - name: alertmanager-volumes
+              mountPath: /config
       restartPolicy: Always
       volumes:
-        - hostPath:
-            path: D:\projects\Docker\monitoring\config
-          name: alertmanager-hostpath0
+        - name: alertmanager-volumes
+          configMap:
+            name: alertmanager-config
 status: {}

@@ -1,4 +1,3 @@
-kind: ConfigMap
 route:
   group_by: ['mingAlert']
   group_wait: 5s

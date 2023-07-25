@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert --volumes hostPath
+    kompose.cmd: kompose convert --volumes=hostPath
     kompose.version: 1.28.0 (c4137012e)
   creationTimestamp: null
   labels:
@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert --volumes hostPath
+        kompose.cmd: kompose convert --volumes=hostPath
         kompose.version: 1.28.0 (c4137012e)
       creationTimestamp: null
       labels:
@@ -34,11 +34,11 @@ spec:
             - containerPort: 9115
           resources: {}
           volumeMounts:
-            - mountPath: /etc/blackbox/blackbox.yml
-              name: blackbox-hostpath0
+            - name: blackbox-volumes
+              mountPath: /etc/blackbox/
       restartPolicy: Always
       volumes:
-        - hostPath:
-            path: D:\projects\Docker\monitoring\blackbox.yml
-          name: blackbox-hostpath0
+        - name: blackbox-volumes
+          configMap:
+            name: blackbox-config
 status: {}
